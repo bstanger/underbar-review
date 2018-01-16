@@ -7,7 +7,7 @@
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
-    return val
+    return val;
   };
 
   /**
@@ -47,11 +47,11 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
-    if (Array.isArray(collection)){
-      for (var i = 0; i < collection.length; i++){
+    if (Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++) {
         iterator(collection[i], i, collection);
       }
-    } else if (typeof collection === "object"){
+    } else if (typeof collection === 'object') {
       for (var key in collection) {
         iterator(collection[key], key, collection);
       }
@@ -78,16 +78,51 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var arrHelper = [];
+    _.each(collection, function(item, index, collection){
+      if(test(item)){
+        arrHelper.push(item);
+      }
+    });
+    return arrHelper;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    var arr = [];
+    _.filter(collection, function(item) {
+      if(!test(item)) {
+        arr.push(item);
+      }
+
+    })
+    return arr;
+    // var arrHelper = [];
+    // _.each(collection, function(item, index, collection){
+    //   if(!test(item)){
+    //     arrHelper.push(item);
+    //   }
+    // });
+    // return arrHelper;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    var obj = {};
+    var arr = [];
+    for(var i = 0; i < array.length; i++) {
+      obj[array[i]] = array[i];
+    }
+    for(var key in obj) {
+      if(arr.indexOf(obj[key]) === -1) {
+        arr.push(obj[key]);
+      }
+    }
+
+    
+    return arr;
   };
 
 
